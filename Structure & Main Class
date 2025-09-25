@@ -1,0 +1,18 @@
+// File: edu/ccrm/cli/CcrMain.java
+package edu.ccrm.cli;
+
+import edu.ccrm.config.AppConfig; [span_0](start_span)// Singleton[span_0](end_span)
+import edu.ccrm.domain.Student;
+// ... other necessary imports
+
+public class CcrMain {
+
+    public static void main(String[] args) {
+        [span_1](start_span)[span_2](start_span)// 1. Initialize AppConfig (Singleton pattern)[span_1](end_span)[span_2](end_span)
+        AppConfig config = AppConfig.getInstance();
+        System.out.println("CCRM initialized. Data path: " + config.getDataPath());
+
+        [span_3](start_span)// 2. Start the CLI menu[span_3](end_span)
+        new CliMenu(config).start();
+    }
+}
