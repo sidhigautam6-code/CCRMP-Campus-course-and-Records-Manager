@@ -1,0 +1,73 @@
+// File: edu/ccrm/config/AppConfig.java
+package edu.ccrm.config;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+[span_17](start_span)public class AppConfig { // Singleton[span_17](end_span)
+    
+    private static volatile AppConfig instance;
+    private final Path dataPath = Paths.get("data"); [span_18](start_span)// Example config data[span_18](end_span)
+
+    [span_19](start_span)// Private constructor[span_19](end_span)
+    private AppConfig() {
+        // Load configuration/settings here...
+        if (instance != null) {
+            // Prevent instantiation via reflection
+            throw new IllegalStateException("Singleton already initialized.");
+        }
+    }
+
+    [span_20](start_span)// Public static method to get the instance[span_20](end_span)
+    public static AppConfig getInstance() {
+        if (instance == null) {
+            synchronized (AppConfig.class) { // Thread-safe initialization
+                if (instance == null) {
+                    instance = new AppConfig();
+                }
+            }
+        }
+        return instance;
+    }
+    
+    public Path getDataPath() {
+        return dataPath;
+    }
+}
+#Enums with fields & constructors(Grade)
+// File: edu/ccrm/domain/Grade.java
+package edu.ccrm.domain;
+
+[span_21](start_span)[span_22](start_span)public enum Grade { // Enum with constructors & fields[span_21](end_span)[span_22](end_span)
+    S(4.0, "Excellent"),
+    A(3.7, "Very Good"),
+    B(3.3, "Good"),
+    C(3.0, "Average"),
+    D(2.7, "Poor"),
+    F(0.0, "Fail");
+
+    private final double gradePoint;
+    private final String description;
+
+    [span_23](start_span)// Enum constructor[span_23](end_span)
+    Grade(double gradePoint, String description) {
+        this.gradePoint = gradePoint;
+        this.description = description;
+    }
+
+    public double getGradePoint() {
+        return gradePoint;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+    
+    // Utility to get Grade from marks (simplified logic)
+    public static Grade fromMarks(int marks) {
+        if (marks >= 90) return S;
+        if (marks >= 80) return A;
+        // ... more logic
+        return F;
+    }
+}
