@@ -1,0 +1,29 @@
+// File: edu/ccrm/domain/Person.java
+package edu.ccrm.domain;
+
+import java.time.LocalDate;
+import java.util.UUID; // Using UUID for id
+
+[span_4](start_span)public abstract class Person { // Abstract class[span_4](end_span)
+    private final String id; [span_5](start_span)// Encapsulation[span_5](end_span)
+    private final LocalDate dateCreated;
+
+    [span_6](start_span)// Constructors in inheritance[span_6](end_span)
+    public Person(String id, LocalDate dateCreated) {
+        this.id = id != null ? id : UUID.randomUUID().toString();
+        this.dateCreated = dateCreated;
+    }
+    
+    [span_7](start_span)// Abstract method[span_7](end_span)
+    public abstract String getRole(); 
+
+    // Getters
+    public String getId() { return id; }
+    public LocalDate getDateCreated() { return dateCreated; }
+    
+    [span_8](start_span)[span_9](start_span)// Overriding toString() is mandatory[span_8](end_span)[span_9](end_span)
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Created: " + dateCreated;
+    }
+}
