@@ -1,0 +1,55 @@
+package edu.ccrm.cli;
+
+import edu.ccrm.config.AppConfig;
+import edu.ccrm.service.BackupService;
+import java.io.IOException;
+
+public class CcrMain {
+
+    public static void main(String[] args) {
+        // Initialize the Singleton Configuration
+        AppConfig config = AppConfig.getInstance();
+        
+        // Run Assertions Check (Mandatory Requirement)
+        boolean assertionsEnabled = false;
+        try {
+            assert (assertionsEnabled = true);
+        } catch (AssertionError e) {
+            // This block is never reached if assertions are enabled
+        }
+        if (!assertionsEnabled) {
+            System.err.println("⚠ WARNING: Java Assertions are NOT enabled. Run with java -ea...");
+            // Optional: Exit program if assertions are critical
+        }
+
+        // Platform Note (Mandatory Requirement - from README)
+        printPlatformNote();
+
+        // Start the application menu (simplified for brevity)
+        System.out.println("\n--- CCRM Initialized ---");
+        System.out.println("Data Path: " + config.getDataPath().toAbsolutePath());
+        
+        // Example: Run the backup command
+        try {
+            BackupService backupService = new BackupService();
+            Path backupPath = backupService.createBackup();
+            
+            long size = backupService.calculateDirectorySizeRecursively(backupPath);
+            System.out.printf("✅ Backup created successfully at %s with size: %.2f KB\n", 
+                              backupPath.getFileName(), size / 1024.0);
+                              
+        } catch (IOException e) {
+            System.err.println("FATAL: Backup operation failed. " + e.getMessage());
+        }
+        
+        // TODO: Instantiate CliMenu and run the main loop here
+    }
+
+    private static void printPlatformNote() {
+        System.out.println("\n*** Java Platform Summary ***");
+        System.out.println("Java SE (Standard Edition): Core Java programming platform (used for this project).");
+        System.out.println("Java ME (Micro Edition): Legacy platform for embedded/mobile devices (now mostly superseded).");
+        System.out.println("Java EE (Enterprise Edition): APIs for large-scale, distributed, multi-tiered applications (e.g., Servlets, JPA).");
+        System.out.println("*");
+    }
+}
