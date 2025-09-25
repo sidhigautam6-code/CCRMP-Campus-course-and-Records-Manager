@@ -1,0 +1,45 @@
+// File: edu/ccrm/domain/Student.java
+package edu.ccrm.domain;
+
+import java.time.LocalDate;
+import java.util.List;
+// ... imports for Enrollment, etc.
+
+[span_10](start_span)public class Student extends Person { // Inheritance[span_10](end_span)
+    private final String regNo;
+    private String fullName;
+    private String email;
+    private StudentStatus status; // Enum (not shown)
+    private List<Course> enrolledCourses; [span_11](start_span)// List of enrolled courses[span_11](end_span)
+    
+    [span_12](start_span)// Demonstrate super()[span_12](end_span)
+    public Student(String id, LocalDate dateCreated, String regNo, String fullName, String email) {
+        super(id, dateCreated);
+        this.regNo = regNo;
+        this.fullName = fullName;
+        this.email = email;
+        this.status = StudentStatus.ACTIVE;
+        // Initialization of lists/collections here...
+    }
+
+    [span_13](start_span)// Encapsulation: Getter/Setter for updatable fields[span_13](end_span)
+    public String getRegNo() { return regNo; }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+    // ... other methods
+
+    [span_14](start_span)// Polymorphism: Implementing abstract method[span_14](end_span)
+    @Override
+    public String getRole() { return "Student"; }
+
+    [span_15](start_span)[span_16](start_span)// Overridden toString() for profile[span_15](end_span)[span_16](end_span)
+    @Override
+    public String toString() {
+        return "Student Profile: \n" +
+               "  Reg No: " + regNo + "\n" +
+               "  Name: " + fullName + "\n" +
+               "  Email: " + email + "\n" +
+               "  Status: " + status + "\n" +
+               super.toString();
+    }
+}
